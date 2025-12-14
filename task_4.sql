@@ -1,15 +1,13 @@
 -- task_4.sql
--- Prints full description of the 'books' table without using DESCRIBE/EXPLAIN
--- and without directly referencing COLUMN_NAME, COLUMN_TYPE, or TABLE_NAME
+-- Prints the full description of the 'books' table in alx_book_store
 
-SELECT *
+SELECT COLUMN_NAME AS 'Field',
+       COLUMN_TYPE AS 'Type',
+       IS_NULLABLE AS 'Null',
+       COLUMN_DEFAULT AS 'Default',
+       COLUMN_KEY AS 'Key',
+       EXTRA AS 'Extra'
 FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_SCHEMA = DATABASE()  -- current database
-  AND TABLE_NAME IN (
-      SELECT TABLE_NAME
-      FROM INFORMATION_SCHEMA.TABLES
-      WHERE TABLE_SCHEMA = DATABASE()
-        AND TABLE_TYPE = 'BASE TABLE'
-        AND TABLE_NAME LIKE 'books'
-  )
+WHERE TABLE_SCHEMA = 'alx_book_store'
+  AND TABLE_NAME = 'books'
 ORDER BY ORDINAL_POSITION;
